@@ -6,6 +6,7 @@ import com.ahason.sso.model.OTPVerification;
 import com.ahason.sso.repository.OTPRepository;
 import com.ahason.sso.repository.PhoneRepository;
 import com.ahason.sso.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class SignupController {
         return "signup";
     }
 
+    @Operation(summary = "Send OTP for signup", description = "Generates OTP for mobile signup")
     @PostMapping("/send-otp")
     public String sendOtp(@RequestParam String mobile, Model model) {
         String otp = String.valueOf((int)(Math.random() * 900000) + 100000);
@@ -46,6 +48,7 @@ public class SignupController {
         model.addAttribute("mobile", mobile);
         return "otp-verify";
     }
+
 
     @PostMapping("/verify-otp")
     public String verifyOtp(@RequestParam String mobile, @RequestParam String otp, HttpSession session) {
